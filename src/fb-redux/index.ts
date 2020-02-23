@@ -1,13 +1,15 @@
-
-// create redux
+// INSPIRATION
+// Redux:
 // https://medium.com/@guokai83524/building-redux-from-scratch-e12eb0e484c8
 // https://codeburst.io/build-your-own-redux-from-scratch-1fb1c348b2f8
+// ***: https://levelup.gitconnected.com/learn-redux-by-building-redux-from-scratch-dcbcbd31b0d0
 
-// BEST (inspired): https://levelup.gitconnected.com/learn-redux-by-building-redux-from-scratch-dcbcbd31b0d0
-// CombineReducer: https://blog.jakoblind.no/code-your-own-combinereducers/
+// CombineReducer:
+// https://blog.jakoblind.no/code-your-own-combinereducers/
 
+// Middlewares:
 // https://blog.jakoblind.no/learn-redux-by-coding-a-mini-redux/
-// MIDDLEWARE: https://zapier.com/engineering/how-to-build-redux/
+// https://zapier.com/engineering/how-to-build-redux/
 
 const devTools =  (window as any).__REDUX_DEVTOOLS_EXTENSION__;
 
@@ -55,14 +57,15 @@ export const createStore = (reducers, middleware = null) => {
 //  export type Store = ReturnType<typeof createStore>
 
 
-// TIP https://blog.jakoblind.no/code-your-own-combinereducers/
+// INSPIRED:
+// https://blog.jakoblind.no/code-your-own-combinereducers/
 export function combineReducers(reducers) {
   // First get an array with all the keys of the reducers (the reducer names)
   const reducerKeys = Object.keys(reducers);
 
   return function combination(state = {}, action) {
     // This is the object we are going to return.
-    const nextState = {}
+    const nextState = {};
 
     // Loop through all the reducer keys
     for (let i = 0; i < reducerKeys.length; i++) {
@@ -75,11 +78,8 @@ export function combineReducers(reducers) {
       // Get the the previous state
       const previousStateForKey = state[key]
 
-      // Get the next state by running the reducer
-      const nextStateForKey = reducer(previousStateForKey, action)
-
       // Update the new state for the current reducer
-      nextState[key] = nextStateForKey;
+      nextState[key] = reducer(previousStateForKey, action);
     }
     return nextState;
   }
